@@ -1,0 +1,5 @@
+{
+    "mongoURL": "mongodb+srv://DBAdmin:itppro123AA@braintech.mti5y.mongodb.net/SPMDB?retryWrites=true&w=majority",
+  
+    "jwtSecret": "mysecrettoken"
+}
