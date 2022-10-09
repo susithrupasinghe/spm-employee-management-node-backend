@@ -47,6 +47,7 @@ const getEmployeeDetailsById = async (req, res) => {
     }
   };
 
+  
   module.exports = {
     getEmployeeDetailsById,
   };
