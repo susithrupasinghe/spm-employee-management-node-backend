@@ -6,3 +6,5 @@ const {
 } = require("../controllers/Employee.contoller");
 
 router.get("/:id", getEmployeeDetailsById);
+
+module.exports = router;
