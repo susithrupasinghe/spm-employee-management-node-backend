@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
     getEmployeeDetailsById
-} = require("../controllers/Employee.contoller");
+} = require("../controllers/Employee.controller");
 
 router.get("/:id", getEmployeeDetailsById);
 
