@@ -25,6 +25,10 @@ app.use("/api/sprint", require("./routes/Sprint.route"));
 //-------------------Employee---------------------
 app.use("/api/employee", require("./routes/Employee.route"));
 
-const PORT = process.env.PORT || 3000;
+//-------------------Product Manager---------------------
+app.use("/api/projectmanager", require("./routes/ProjectManager.route"));
+
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
