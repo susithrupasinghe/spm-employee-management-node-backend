@@ -26,7 +26,7 @@ app.use("/api/sprint", require("./routes/Sprint.route"));
 app.use("/api/employee", require("./routes/Employee.route"));
 
 //-------------------Documentation---------------------
-app.use("/api/employeedocumentation", require("./routes/Documentation.route"));
+app.use("/api/addDocumentation", require("./routes/Documentation.route"));
 
 const PORT = process.env.PORT || 3000;
 

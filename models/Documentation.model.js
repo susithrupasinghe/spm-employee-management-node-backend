@@ -10,4 +10,4 @@ const DocumentationSchema = new Schema({
     }
 });
 
-module.exports = documentation = mongoose.model("Documentation", DocumentationSchema);
+module.exports = Documentation = mongoose.model("Documentation", DocumentationSchema);
