@@ -23,11 +23,11 @@ app.use("/api/project", require("./routes/Project.route"));
 app.use("/api/sprint", require("./routes/Sprint.route"));
 
 //-------------------Employee---------------------
-app.use("/api/employee", require("./routes/Employee.route"));
+app.use("/api/employee", require("././controllers/Employee.controller"));
 
 //-------------------Documentation---------------------
-app.use("/api/addDocumentation", require("./routes/Documentation.route"));
+app.use("/api/documentation", require("././controllers/Documentation.controller"));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
