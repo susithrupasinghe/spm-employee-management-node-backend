@@ -59,7 +59,7 @@ router.get('/readEmployeeProject',function(req,res,next){
     res.status(200).json({
       success: true,
       message: 'Read successfuly',
-      payload: Project
+      Project
     })
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
