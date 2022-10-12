@@ -23,11 +23,10 @@ app.use("/api/project", require("./routes/Project.route"));
 app.use("/api/sprint", require("./routes/Sprint.route"));
 
 //-------------------Employee---------------------
-app.use("/api/employee", require("./routes/Employee.route"));
+app.use("/api/employee", require("././controllers/Employee.controller"));
 
-//-------------------Product Manager---------------------
-app.use("/api/projectmanager", require("./routes/ProjectManager.route"));
-
+//-------------------Documentation---------------------
+app.use("/api/documentation", require("././controllers/Documentation.controller"));
 
 const PORT = process.env.PORT || 5000;
 
