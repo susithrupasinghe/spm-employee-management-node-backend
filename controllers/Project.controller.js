@@ -10,11 +10,12 @@ const getAllProjects = async (req, res) => {
   try {
     const project = await Project.find()
       .populate("projectManager", "_id name")
-      .populate("employeeList", "_id name")
+      .populate("employeeList", "_id firstName lastName")
       .populate(
         "sprintList",
         "_id fromDate toDate isClosed toDoList inProgressList doneList"
       );
+      console.log(project);
     res.json(project);
   } catch (err) {
     console.log(err.message);
