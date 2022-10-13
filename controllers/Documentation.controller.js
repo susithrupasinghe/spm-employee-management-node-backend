@@ -59,7 +59,7 @@ router.get('/readDocmentationByProject',function(req,res,next){
     res.status(200).json({
       success: true,
       message: 'Read successfuly',
-      payload: Document
+      Document
     })
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
@@ -69,11 +69,11 @@ router.get('/readDocmentationByProject',function(req,res,next){
 //get documentation description
 router.get('/readDocmentationDescription',function(req,res,next){
   DocumentationModel.find({_id:req.query.id,status:'true'})
-  .then((Document)=>{
+  .then((DocumentDes)=>{
     res.status(200).json({
       success: true,
       message: 'Read successfuly',
-      payload: Document
+      DocumentDes
     })
   }).catch((e)=>{
     res.status(400).json({
