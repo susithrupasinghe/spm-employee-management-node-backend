@@ -29,7 +29,7 @@ const getProjectDetails = async (req, res) => {
     //const project = await Project.findById(req.params.id).populate('projectManager', '_id name').populate('employeeList', '_id name').populate('sprintList', '_id fromDate toDate isClosed toDoList inProgressList doneList');
     const project = await Project.findById(req.params.id)
       .populate("projectManager", "_id name")
-      .populate("employeeList", "_id name")
+      .populate("employeeList", "_id firstName lastName department")
       .populate("sprintList", "_id fromDate toDate isClosed")
       .populate({
         path: "sprintList",
