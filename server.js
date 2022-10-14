@@ -24,6 +24,8 @@ app.use("/api/sprint", require("./routes/Sprint.route"));
 
 //-------------------Employee---------------------
 app.use("/api/employee", require("./routes/Employee.route"));
+// //-------------------Employee---------------------
+// app.use("/api/employees", require("././controllers/Employee.controller"));
 
 //-------------------Documentation---------------------
 app.use("/api/documentation", require("././controllers/Documentation.controller"));
