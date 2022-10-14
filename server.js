@@ -23,7 +23,7 @@ app.use("/api/project", require("./routes/Project.route"));
 app.use("/api/sprint", require("./routes/Sprint.route"));
 
 //-------------------Employee---------------------
-app.use("/api/employee", require("././controllers/Employee.controller"));
+app.use("/api/employee", require("./routes/Employee.route"));
 
 //-------------------Documentation---------------------
 app.use("/api/documentation", require("././controllers/Documentation.controller"));
