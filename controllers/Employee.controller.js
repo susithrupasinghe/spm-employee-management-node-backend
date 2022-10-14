@@ -182,37 +182,11 @@ const updateEmployeeProfile = async (req, res) => {
 const deleteEmployee = async (req, res) => {
   try {
     const user = await Employee.findById(req.params.id);
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "cc8d3f8f4b23401c9e3b36474ecce84d",
-      },
-    };
-
-    if (user.persistedFaceId) {
-      await axios
-        .delete(
-          `https://eastus.api.cognitive.microsoft.com/face/v1.0/largefacelists/employeelist/persistedfaces/${user.persistedFaceId}`,
-          config
-        )
-        .then(async() => {
-          await Employee.findByIdAndDelete(req.params.id)
-            .then(() => {
-              res.json("Employee Deleted");
-            })
-            .catch((err) => res.status(400).json("Error: " + err));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
       await Employee.findByIdAndDelete(req.params.id)
         .then(() => {
           res.json("Employee Deleted");
         })
         .catch((err) => res.status(400).json("Error: " + err));
-    }
   } catch (err) {
     res.status(500).send("Server Error");
   }
@@ -237,6 +211,3 @@ module.exports = {
   updateEmployeeProfile,
   deleteEmployee,
 }; 
-  // module.exports = {
-  //   getEmployeeDetailsById,
-  // };
