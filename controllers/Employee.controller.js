@@ -53,7 +53,20 @@ var router = express.Router();
 //   };
 
 //get Employee details by employe Id
-router.get('/readEmployeeProject',function(req,res,next){
+// router.get('/readEmployeeProject',function(req,res,next){
+//   ProjectModel.find({employeeList:req.query.id})
+//   .then((Project)=>{
+//     res.status(200).json({
+//       success: true,
+//       message: 'Read successfuly',
+//       Project
+//     })
+//   }).catch((e)=>{
+//     res.status(400).json({success:false, message: e.message, payload: {}})
+//   })
+// });
+
+const gellAllProjectEmployee = async(req,res) => {
   ProjectModel.find({employeeList:req.query.id})
   .then((Project)=>{
     res.status(200).json({
@@ -64,7 +77,7 @@ router.get('/readEmployeeProject',function(req,res,next){
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
   })
-});
+};
 
 const getAllEmployeesList = async (req, res) => {
   try {
@@ -80,6 +93,7 @@ const getAllEmployeesList = async (req, res) => {
   
 module.exports = {
   getAllEmployeesList,
+  gellAllProjectEmployee,
 }; 
   // module.exports = {
   //   getEmployeeDetailsById,
