@@ -59,7 +59,7 @@ router.get('/readDocmentationByProject',function(req,res,next){
     res.status(200).json({
       success: true,
       message: 'Read successfuly',
-      payload: Document
+      Document
     })
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
@@ -69,11 +69,11 @@ router.get('/readDocmentationByProject',function(req,res,next){
 //get documentation description
 router.get('/readDocmentationDescription',function(req,res,next){
   DocumentationModel.find({_id:req.query.id,status:'true'})
-  .then((Document)=>{
+  .then((DocumentDes)=>{
     res.status(200).json({
       success: true,
       message: 'Read successfuly',
-      payload: Document
+      DocumentDes
     })
   }).catch((e)=>{
     res.status(400).json({
@@ -101,7 +101,26 @@ router.delete('/deleteDoc', function(req, res, next){
     })
 });
 
-
+//update documentation
+router.put('/updateDetails', (req, res, next) => {
+  
+  DocumentationModel.updateOne({ "projectId" : req.query.id },
+    {
+      $set: {
+        "documentationTitle": req.body.documentationTitle,
+        "documentationDescription": req.body.documentationDescription,
+      }
+    })
+    .then((result) => {
+      res.json({
+        success: true,
+        message: 'Update sucessful',
+        payload: {}
+      })
+    }).catch((e) => {
+      res.status(400).json({ success: false, message: e.message, payload: {} })
+    })
+});
 
 module.exports = router; 
 
