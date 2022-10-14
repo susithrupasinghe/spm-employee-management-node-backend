@@ -4,6 +4,7 @@ const EmployeeModel = require('../models/Employee.model');
 const Employee = require("../models/Employee.model");
 const ProjectModel = require('../models/Project.model');
 var router = express.Router();
+const bcrypt = require("bcryptjs");
 
 //get Employee details by employe Id
 // const getEmployeeDetailsById = async (req, res) => {
@@ -53,7 +54,20 @@ var router = express.Router();
 //   };
 
 //get Employee details by employe Id
-router.get('/readEmployeeProject',function(req,res,next){
+// router.get('/readEmployeeProject',function(req,res,next){
+//   ProjectModel.find({employeeList:req.query.id})
+//   .then((Project)=>{
+//     res.status(200).json({
+//       success: true,
+//       message: 'Read successfuly',
+//       Project
+//     })
+//   }).catch((e)=>{
+//     res.status(400).json({success:false, message: e.message, payload: {}})
+//   })
+// });
+
+const gellAllProjectEmployee = async(req,res) => {
   ProjectModel.find({employeeList:req.query.id})
   .then((Project)=>{
     res.status(200).json({
@@ -64,7 +78,119 @@ router.get('/readEmployeeProject',function(req,res,next){
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
   })
-});
+};
+
+
+
+//Register user
+const registerEmployee = async (req, res) => {
+  const {username, email, password, mobileNumber, department, rate,role } =
+    req.body;
+
+  try {
+    //See if user Exist
+    let user = await Employee.findOne({ email });
+
+    if (user) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Employee already exist" }] });
+    }
+
+    const profileImg =
+      "https://firebasestorage.googleapis.com/v0/b/econnecteee.appspot.com/o/profileImg.jpg?alt=media&token=46df70d2-9365-4a45-af63-b21c44585f9c";
+
+    const salary = 0.0;
+    const firstName = "";
+    const lastName = "";
+    const address = "";
+    //create a user instance
+    user = new Employee({
+      username,
+      email,
+      password,
+      mobileNumber,
+      department,
+      rate,
+      salary,
+      profileImg,
+      role,
+      firstName,
+      lastName,
+      address,
+    });
+
+    //Encrypt Password
+
+    //10 is enogh..if you want more secured.user a value more than 10
+    const salt = await bcrypt.genSalt(10);
+
+    //hashing password
+    user.password = await bcrypt.hash(password, salt);
+
+    //save user to the database
+    await user.save().then((response) => {
+      res.json(response);
+    });
+  } catch (err) {
+    //Something wrong with the server
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+};
+
+//Update profile employee
+const updateEmployeeProfile = async (req, res) => {
+  try {
+    const user = await Employee.findById(req.params.id);
+
+    if (user != null) {
+      Employee.findByIdAndUpdate(req.params.id).then(async (userProfile) => {
+        if (req.body.profileImg) {
+          userProfile.profileImg = req.body.profileImg;
+        }
+        if (req.body.persistedFaceId) {
+          userProfile.persistedFaceId = req.body.persistedFaceId;
+        }
+        userProfile.username = req.body.username;
+        userProfile.mobileNumber = req.body.mobileNumber;
+        userProfile.firstName = req.body.firstName;
+        userProfile.lastName = req.body.lastName;
+        userProfile.address = req.body.address;
+        if (req.body.password) {
+          //Encrypt Password
+          //10 is enogh..if you want more secured.user a value more than 10
+          const salt = await bcrypt.genSalt(10);
+          //hashing password
+          userProfile.password = await bcrypt.hash(req.body.password, salt);
+        }
+
+        userProfile
+          .save()
+          .then((response) => res.json(response))
+          .catch((err) => res.status(400).json("Error: " + err));
+      });
+    }
+  } catch (err) {
+    //Something wrong with the server
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+};
+
+//Delete Employee
+const deleteEmployee = async (req, res) => {
+  try {
+    const user = await Employee.findById(req.params.id);
+      await Employee.findByIdAndDelete(req.params.id)
+        .then(() => {
+          res.json("Employee Deleted");
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+  } catch (err) {
+    res.status(500).send("Server Error");
+  }
+};
 
 const getAllEmployeesList = async (req, res) => {
   try {
@@ -80,7 +206,8 @@ const getAllEmployeesList = async (req, res) => {
   
 module.exports = {
   getAllEmployeesList,
+  gellAllProjectEmployee,
+  registerEmployee,
+  updateEmployeeProfile,
+  deleteEmployee,
 }; 
-  // module.exports = {
-  //   getEmployeeDetailsById,
-  // };
