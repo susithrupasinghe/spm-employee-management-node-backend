@@ -28,6 +28,9 @@ app.use("/api/employee", require("././controllers/Employee.controller"));
 //-------------------Documentation---------------------
 app.use("/api/documentation", require("././controllers/Documentation.controller"));
 
+//-------------------Issue---------------------
+app.use("/api/issue", require("././controllers/Issue.controller"));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

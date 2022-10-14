@@ -101,7 +101,26 @@ router.delete('/deleteDoc', function(req, res, next){
     })
 });
 
-
+//update documentation
+router.put('/updateDetails', (req, res, next) => {
+  
+  DocumentationModel.updateOne({ "projectId" : req.query.id },
+    {
+      $set: {
+        "documentationTitle": req.body.documentationTitle,
+        "documentationDescription": req.body.documentationDescription,
+      }
+    })
+    .then((result) => {
+      res.json({
+        success: true,
+        message: 'Update sucessful',
+        payload: {}
+      })
+    }).catch((e) => {
+      res.status(400).json({ success: false, message: e.message, payload: {} })
+    })
+});
 
 module.exports = router; 
 
