@@ -146,12 +146,12 @@ const updateEmployeeProfile = async (req, res) => {
 
     if (user != null) {
       Employee.findByIdAndUpdate(req.params.id).then(async (userProfile) => {
-        if (req.body.profileImg) {
-          userProfile.profileImg = req.body.profileImg;
-        }
-        if (req.body.persistedFaceId) {
-          userProfile.persistedFaceId = req.body.persistedFaceId;
-        }
+        // if (req.body.profileImg) {
+        //   userProfile.profileImg = req.body.profileImg;
+        // }
+        // if (req.body.persistedFaceId) {
+        //   userProfile.persistedFaceId = req.body.persistedFaceId;
+        // }
         userProfile.username = req.body.username;
         userProfile.mobileNumber = req.body.mobileNumber;
         userProfile.firstName = req.body.firstName;
@@ -203,9 +203,22 @@ const getAllEmployeesList = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+const getEmployeedetails = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const emp = await Employee.find({email:email}).select("-password");
+    console.log(emp)
+    res.json(emp);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
   
 module.exports = {
   getAllEmployeesList,
+  getEmployeedetails,
   gellAllProjectEmployee,
   registerEmployee,
   updateEmployeeProfile,
