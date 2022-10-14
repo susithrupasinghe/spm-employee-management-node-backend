@@ -65,8 +65,22 @@ router.get('/readEmployeeProject',function(req,res,next){
     res.status(400).json({success:false, message: e.message, payload: {}})
   })
 });
+
+const getAllEmployeesList = async (req, res) => {
+  try {
+    //get user details
+    //-password : dont return the pasword
+    const empList = await Employee.find().select("-password");
+    res.json(empList);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+};
   
-module.exports = router; 
+module.exports = {
+  getAllEmployeesList,
+}; 
   // module.exports = {
   //   getEmployeeDetailsById,
   // };
