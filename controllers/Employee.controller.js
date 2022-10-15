@@ -2,6 +2,7 @@ var express = require('express');
 const auth = require('../middleware/auth');
 const EmployeeModel = require('../models/Employee.model');
 const Employee = require("../models/Employee.model");
+const Attendence = require("../models/Attendence.model");
 const ProjectModel = require('../models/Project.model');
 var router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -186,6 +187,48 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
+//Confirm  - Attendence
+const Markattendance= async (req, res) => {
+  const email = req.params.email;
+  try {
+    const user = await Employee.findOne({email:email});
+    console.log(req.params.email);
+    if (user != null) {
+      console.log("confit");
+      Employee.findOneAndUpdate({email:email}).then(async () => {
+        const { inTime, date,outTime } = req.body;
+        try {
+          const newAttendenceObj = new Attendence({
+            inTime,
+            date,
+            outTime,
+          });
+
+          //save attendance to the database
+          await newAttendenceObj
+            .save()
+            .then(async (createdAttendenceObj) => {
+              user.attendanceList.unshift(createdAttendenceObj);
+              // await calculateEmpSalary(req.params.userid);
+              await user.save();
+              res.json(user);
+            })
+            .catch((err) => res.status(400).json("Error: " + err));
+        } catch (err) {
+          console.error(err.message);
+          res.status(500).send("Server Error");
+        }
+      });
+    }
+  } catch (err) {
+    //Something wrong with the server
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+};
+
+
+
 const getAllEmployeesList = async (req, res) => {
   try {
     //get user details
@@ -216,4 +259,5 @@ module.exports = {
   registerEmployee,
   updateEmployeeProfile,
   deleteEmployee,
+  Markattendance,
 }; 
