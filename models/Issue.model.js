@@ -20,6 +20,9 @@ const IssueSchema = new Schema({
     },
     estimatedTime: {
         type: Number
+    },
+    projectId: {
+        type: Number
     }
 });
 
