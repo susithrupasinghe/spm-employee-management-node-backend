@@ -30,8 +30,11 @@ app.use("/api/employee", require("./routes/Employee.route"));
 //-------------------Documentation---------------------
 app.use("/api/documentation", require("././controllers/Documentation.controller"));
 
-//-------------------Issue---------------------
-app.use("/api/issue", require("././controllers/Issue.controller"));
+// //-------------------Issue---------------------
+// app.use("/api/issue", require("././controllers/Issue.controller"));
+
+//-------------------Issues---------------------
+app.use("/api/issue", require("./routes/Issue.route"));
 
 const PORT = process.env.PORT || 5000;
 

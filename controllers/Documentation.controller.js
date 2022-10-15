@@ -115,7 +115,7 @@ router.put('/updateDetails', (req, res, next) => {
       res.json({
         success: true,
         message: 'Update sucessful',
-        payload: {}
+        payload: result
       })
     }).catch((e) => {
       res.status(400).json({ success: false, message: e.message, payload: {} })
