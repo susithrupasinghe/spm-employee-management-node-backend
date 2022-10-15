@@ -4,8 +4,12 @@ const EmployeeModel = require('../models/Employee.model');
 const Employee = require("../models/Employee.model");
 const Attendence = require("../models/Attendence.model");
 const ProjectModel = require('../models/Project.model');
+const config = require("config");
+const jwt = require("jsonwebtoken");
 var router = express.Router();
 const bcrypt = require("bcryptjs");
+
+
 
 //get Employee details by employe Id
 // const getEmployeeDetailsById = async (req, res) => {
@@ -79,6 +83,50 @@ const gellAllProjectEmployee = async(req,res) => {
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
   })
+};
+
+const loginEmployee = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    //See if user Exist
+    let user = await Employee.findOne({ email });
+    console.log("user: ", user);
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+
+    //match the user email and password
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+
+    //Return jsonwebtoken
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+    console.log(config.get("jwtSecret"));
+
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    //Something wrong with the server
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
 };
 
 
@@ -251,6 +299,8 @@ const getEmployeedetails = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+
   
 module.exports = {
   getAllEmployeesList,
@@ -260,4 +310,5 @@ module.exports = {
   updateEmployeeProfile,
   deleteEmployee,
   Markattendance,
+  loginEmployee,
 }; 

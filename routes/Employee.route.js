@@ -2,6 +2,7 @@ const express = require("express");
 const {
      getAllEmployeesList,
      getEmployeedetails,
+     loginEmployee,
      registerEmployee,
      updateEmployeeProfile,
      deleteEmployee,
@@ -16,5 +17,5 @@ router.post("/attendence/:email",Markattendance);
 router.delete("/:id", deleteEmployee);
 router.put("/updateprofile/:id", updateEmployeeProfile);
 router.get("/readEmployeeProject",gellAllProjectEmployee);
-
+router.post("/login", loginEmployee);
 module.exports = router;
