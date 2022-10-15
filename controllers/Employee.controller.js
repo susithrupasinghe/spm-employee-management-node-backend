@@ -240,9 +240,8 @@ const Markattendance= async (req, res) => {
   const email = req.params.email;
   try {
     const user = await Employee.findOne({email:email});
-    console.log(req.params.email);
+    console.log(user);
     if (user != null) {
-      console.log("confit");
       Employee.findOneAndUpdate({email:email}).then(async () => {
         const { inTime, date,outTime } = req.body;
         try {
@@ -251,6 +250,7 @@ const Markattendance= async (req, res) => {
             date,
             outTime,
           });
+          console.log(newAttendenceObj);
 
           //save attendance to the database
           await newAttendenceObj
@@ -275,7 +275,18 @@ const Markattendance= async (req, res) => {
   }
 };
 
-
+const attendanceList = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const user = await Employee.findOne({email:email},{attendanceList:1}).populate({
+      path: "attendanceList",
+      model: "Attendence",
+    });
+    res.json(user)
+  } catch (err) {
+    res.status(500).send("Server Error");
+  }
+};
 
 const getAllEmployeesList = async (req, res) => {
   try {
@@ -311,4 +322,5 @@ module.exports = {
   deleteEmployee,
   Markattendance,
   loginEmployee,
+  attendanceList,
 }; 

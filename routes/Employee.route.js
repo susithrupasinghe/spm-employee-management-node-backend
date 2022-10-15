@@ -3,6 +3,7 @@ const {
      getAllEmployeesList,
      getEmployeedetails,
      loginEmployee,
+     attendanceList,
      registerEmployee,
      updateEmployeeProfile,
      deleteEmployee,
@@ -18,4 +19,5 @@ router.delete("/:id", deleteEmployee);
 router.put("/updateprofile/:id", updateEmployeeProfile);
 router.get("/readEmployeeProject",gellAllProjectEmployee);
 router.post("/login", loginEmployee);
+router.get("/attendenceList/:email",attendanceList)
 module.exports = router;
