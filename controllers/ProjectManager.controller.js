@@ -219,19 +219,6 @@ const deleteProjectManager = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-
-//Confirm PM Face Authentication
-const confirmPMFaceAuthentication = async (req, res) => {
-    try {
-      const emp = await ProjectManager.findOne({
-        persistedFaceId: req.params.persistedFaceId,
-      }).select("_id name username persistedFaceId");
-      res.json(emp);
-    } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server Error");
-    }
-  };
   
   //Confirm In Time - Attendence
   const confirmInTime = async (req, res) => {
@@ -331,7 +318,6 @@ const confirmPMFaceAuthentication = async (req, res) => {
   
 module.exports = {
 
-  confirmPMFaceAuthentication,
   confirmInTime,
   confirmOutTime,
   getProjectManagerDetails,
@@ -340,5 +326,4 @@ module.exports = {
   updateProjectManagerProfile,
   getAllProjectManagerList,
   deleteProjectManager,
-  loginProjectManagerWithFaceAuthetication,
 };
