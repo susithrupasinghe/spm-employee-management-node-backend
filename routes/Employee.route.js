@@ -1,6 +1,7 @@
 const express = require("express");
 const {
      getAllEmployeesList,
+     getEmployeedetails,
      registerEmployee,
      updateEmployeeProfile,
      deleteEmployee,
@@ -8,6 +9,7 @@ const {
 const router = express.Router();
 
 router.get("/all",getAllEmployeesList);
+router.get("/:email",getEmployeedetails);
 router.post("/register", registerEmployee);
 router.delete("/:id", deleteEmployee);
 router.put("/updateprofile/:id", updateEmployeeProfile);
