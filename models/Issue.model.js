@@ -5,8 +5,13 @@ const IssueSchema = new Schema({
     issueName: {
         type: String,
     },
-     projectId: {
-        type: String,
+    project_id: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+    sprint_id: {
+        type: mongoose.Types.ObjectId,
+        required: true
     },
     description: {
         type: String,
@@ -22,9 +27,8 @@ const IssueSchema = new Schema({
         type: String
     },
     estimatedTime: {
-        type: Number
-    },
-   
+        type: String
+    }
 });
 
 module.exports = Issue = mongoose.model("Issue", IssueSchema);

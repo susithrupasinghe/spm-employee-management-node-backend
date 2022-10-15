@@ -15,6 +15,8 @@ app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => res.send("Employee Management System Backend Api Running"));
 
+//-------------------Admin---------------------
+app.use("/api/admin", require("./routes/Admin.routes"));
 
 //-------------------Project---------------------
 app.use("/api/project", require("./routes/Project.route"));
@@ -24,6 +26,11 @@ app.use("/api/sprint", require("./routes/Sprint.route"));
 
 //-------------------Employee---------------------
 app.use("/api/employee", require("./routes/Employee.route"));
+
+//-------------------Product Manager---------------------
+app.use("/api/projectmanager", require("./routes/ProjectManager.route"));
+
+
 // //-------------------Employee---------------------
 // app.use("/api/employees", require("././controllers/Employee.controller"));
 

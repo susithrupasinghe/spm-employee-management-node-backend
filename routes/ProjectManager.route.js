@@ -11,10 +11,8 @@ const {
 
 router.put("/confirmouttime/:attendenceId", confirmOutTime);
 router.put("/confirmintime/:userid", confirmInTime);
-router.get("/confirmface/:persistedFaceId", confirmPMFaceAuthentication);
 router.get("/all", getAllProjectManagerList)
 router.post("/register", registerProjectManager);
-router.post("/loginwithfaceauth", loginProjectManagerWithFaceAuthetication);
 router.post("/login", loginProjectManager);
 router.get("/", auth, getProjectManagerDetails);
 router.delete("/:id", deleteProjectManager);
