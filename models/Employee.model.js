@@ -14,6 +14,7 @@ const EmployeeSchema = new Schema({
     email: {
         type: String,
         unique: true,
+        required:true,
     },
     password: {
         type: String,
@@ -57,6 +58,9 @@ const EmployeeSchema = new Schema({
     address: {
         type: String,
     },
+    role:{
+        type:String
+    }
 });
 
 module.exports = Employee = mongoose.model("Employee", EmployeeSchema);
