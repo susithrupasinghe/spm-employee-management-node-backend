@@ -49,12 +49,6 @@ const EmployeeSchema = new Schema({
           ref: "Comment"
         }
     ],
-    profileImg: {
-        type: String,
-    },
-    persistedFaceId:{
-        type: String,
-    },
     address: {
         type: String,
     },
