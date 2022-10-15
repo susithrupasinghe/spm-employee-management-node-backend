@@ -1,21 +1,22 @@
 const express = require("express");
 const EmployeeModel = require("../models/Employee.model");
 const IssueModel = require("../models/Issue.model");
-const router = express.Router();
 
-router.get("/:id", async (req, res) => {
-    try{
-        let id = req.params.id;
-        let issue = await IssueModel.findById(id);
-        //console.log(issue);
-        res.json(issue);
-    }catch(e){
-        res.sendStatus(500);
-        console.error(e);
-    }
-});
+const gellAllIssueToDo = async(req,res) => {
+    IssueModel.find({projectId:req.query.id, progress: "todo"})
+    .then((Issue)=>{
+      res.status(200).json({
+        success: true,
+        message: 'Read successfuly',
+        Issue
+      })
+    }).catch((e)=>{
+      res.status(400).json({success:false, message: e.message, Issue: {}})
+    })
+  };
 
-router.patch("/:id", async (req, res) => {
+
+const updateIssue = async (req, res) => {
     try {
         let id = req.params.id;
         let { issueName, description, points, assignee, progress, estimatedTime } = req.body;
@@ -35,6 +36,26 @@ router.patch("/:id", async (req, res) => {
         res.sendStatus(500);
         console.error(e);
     }
-});
+}; 
 
-module.exports = router;
+const getIssue = async (req, res) => {
+    try{
+        let id = req.params.id;
+        let issue = await IssueModel.findById(id);
+        //console.log(issue);
+        res.json(issue);
+    }catch(e){
+        res.sendStatus(500);
+        console.error(e);
+    }
+};
+
+module.exports = {
+  
+    gellAllIssueToDo,
+    updateIssue,
+    getIssue
+
+
+}; 
+

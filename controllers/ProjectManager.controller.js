@@ -78,42 +78,6 @@ const loginProjectManager = async (req, res) => {
   }
 };
 
-//Authenticate ProjectManager With Face Authetication and get token
-const loginProjectManagerWithFaceAuthetication = async (req, res) => {
-  const { persistedFaceId } = req.body;
-
-  try {
-    //See if user Exist
-    let user = await ProjectManager.findOne({ persistedFaceId });
-
-    if (!user) {
-      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-    }
-
-    //Return jsonwebtoken
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      { expiresIn: 360000 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    //Something wrong with the server
-    console.error(err.message);
-    return res.status(500).send("Server Error");
-  }
-};
-
 //Register ProjectManager
 const registerProjectManager = async (req, res) => {
   const { name, username, email, password, mobileNumber, rate } = req.body;
@@ -255,19 +219,6 @@ const deleteProjectManager = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
-
-//Confirm PM Face Authentication
-const confirmPMFaceAuthentication = async (req, res) => {
-    try {
-      const emp = await ProjectManager.findOne({
-        persistedFaceId: req.params.persistedFaceId,
-      }).select("_id name username persistedFaceId");
-      res.json(emp);
-    } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server Error");
-    }
-  };
   
   //Confirm In Time - Attendence
   const confirmInTime = async (req, res) => {
@@ -367,7 +318,6 @@ const confirmPMFaceAuthentication = async (req, res) => {
   
 module.exports = {
 
-  confirmPMFaceAuthentication,
   confirmInTime,
   confirmOutTime,
   getProjectManagerDetails,
@@ -376,5 +326,4 @@ module.exports = {
   updateProjectManagerProfile,
   getAllProjectManagerList,
   deleteProjectManager,
-  loginProjectManagerWithFaceAuthetication,
 };
