@@ -2,10 +2,12 @@ const Project = require("../models/Project.model");
 const Sprint = require("../models/Sprint.model");
 const Issue = require("../models/Issue.model");
 const Feedback = require("../models/Feedback.model");
+const IssueModel = require("../models/Issue.model");
 
 //Add issue To Sprint
 const addIssueToSprint = async (req, res) => {
-  const { issueName, description, points, assignee, estimatedTime } = req.body;
+  const { issueName, description, points, assignee, estimatedTime, project_id } = req.body;
+  console.log(req.body);
   try {
     const newIssue = new Issue({
       issueName,
@@ -14,6 +16,8 @@ const addIssueToSprint = async (req, res) => {
       assignee,
       progress: "todo",
       estimatedTime,
+      project_id,
+      sprint_id: req.params.id
     });
 
     //save Issue to the database
@@ -132,10 +136,24 @@ const closeSprintById = async (req, res) => {
   }
 };
 
+const getSprintIssues = async (req, res) => {
+  try{
+    let id = req.params.id;
+
+    let data = await IssueModel.find({ sprint_id: id })
+    res.json(data);
+    //console.log(id, data);
+  }catch(e) {
+    console.error(e);
+    res.sendStatus(500);
+  }
+}
+
 module.exports = {
   addIssueToSprint,
   addFeedbackSprint,
   changeIssueStatusTodoToInProgress,
   changeIssueStatusInProgressToDone,
   closeSprintById,
+  getSprintIssues
 };
