@@ -11,6 +11,6 @@ Team Members
 
 Tech - stack
 
-NodeJS
-ExpressJS
-MongoDB
+1. NodeJS
+2. ExpressJS
+3. MongoDB
