@@ -1,8 +1,10 @@
 var express = require('express');
+const { isValidObjectId } = require('mongoose');
 const auth = require('../middleware/auth');
 const DocumentationModel = require('../models/Documentation.model');
 const Documentation = require("../models/Documentation.model");
 var router = express.Router();
+var mongoose = require('mongoose');
 
 //Add 
 // const addDocumentation = async (req, res) => {
@@ -24,7 +26,9 @@ var router = express.Router();
 //   };
 
 //add documentation
-router.post('/addDocumentation',function (req, res, next){
+// router.post('/addDocumentation',function
+
+const addDocumentation = (req, res, next)=>{
 
   const Documentation = new DocumentationModel({
     projectId: req.query.projectId,
@@ -50,10 +54,11 @@ router.post('/addDocumentation',function (req, res, next){
       }
     );
   }
-});
+};
 
 //get documentation by projectID
-router.get('/readDocmentationByProject',function(req,res,next){
+// router.get('/readDocmentationByProject',function
+const readDocumentation = (req,res,next)=>{
   DocumentationModel.find({projectId:req.query.id,status:'true'})
   .then((Document)=>{
     res.status(200).json({
@@ -64,10 +69,11 @@ router.get('/readDocmentationByProject',function(req,res,next){
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
   })
-});
+};
 
 //get documentation description
-router.get('/readDocmentationDescription',function(req,res,next){
+// router.get('/readDocmentationDescription',function
+const readDocmentationDescription = (req,res,next)=>{
   DocumentationModel.find({_id:req.query.id,status:'true'})
   .then((DocumentDes)=>{
     res.status(200).json({
@@ -81,10 +87,11 @@ router.get('/readDocmentationDescription',function(req,res,next){
       message: e.message, 
       payload: {}})
   })
-});
+};
 
 //delete documentation
-router.delete('/deleteDoc', function(req, res, next){
+// router.delete('/deleteDoc', function
+const deleteDoc = (req, res, next)=> {
 
   DocumentationModel.updateOne({ _id: req.query.id }, { $set: { status: 'false' } })
     .then((result) => {
@@ -99,12 +106,15 @@ router.delete('/deleteDoc', function(req, res, next){
         message: e.message, 
         payload: {} })
     })
-});
+};
 
 //update documentation
-router.put('/updateDetails', (req, res, next) => {
-  
-  DocumentationModel.updateOne({ "projectId" : req.query.id },
+// router.post('/updateDetails', 
+const updateDetails = (req, res, next) => {
+
+  console.log("heheeeeeeeeeeeeeeeeeee");
+
+  DocumentationModel.updateOne({ _id : req.query.id },
     {
       $set: {
         "documentationTitle": req.body.documentationTitle,
@@ -112,6 +122,7 @@ router.put('/updateDetails', (req, res, next) => {
       }
     })
     .then((result) => {
+     
       res.json({
         success: true,
         message: 'Update sucessful',
@@ -120,10 +131,12 @@ router.put('/updateDetails', (req, res, next) => {
     }).catch((e) => {
       res.status(400).json({ success: false, message: e.message, payload: {} })
     })
-});
+};
 
-module.exports = router; 
-
-  // module.exports = {
-  //   addDocumentation,
-  // };
+module.exports = {
+  addDocumentation,
+  readDocumentation,
+  readDocmentationDescription,
+  deleteDoc,
+  updateDetails
+}

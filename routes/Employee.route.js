@@ -17,7 +17,7 @@ router.post("/register", registerEmployee);
 router.post("/attendence/:email",Markattendance);
 router.delete("/:id", deleteEmployee);
 router.put("/updateprofile/:id", updateEmployeeProfile);
-router.get("/readEmployeeProject",gellAllProjectEmployee);
+router.get("/readEmployeeProject/:id",gellAllProjectEmployee);
 router.post("/login", loginEmployee);
 router.get("/attendenceList/:email",attendanceList)
 module.exports = router;
