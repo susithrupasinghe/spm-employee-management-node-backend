@@ -73,13 +73,15 @@ const bcrypt = require("bcryptjs");
 // });
 
 const gellAllProjectEmployee = async(req,res) => {
-  ProjectModel.find({employeeList:req.query.id})
+
+  console.log("Fuuuuuo");
+  return ProjectModel.find({employeeList:req.params.id})
   .then((Project)=>{
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: 'Read successfuly',
       Project
-    })
+    });
   }).catch((e)=>{
     res.status(400).json({success:false, message: e.message, payload: {}})
   })

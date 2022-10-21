@@ -35,7 +35,7 @@ app.use("/api/projectmanager", require("./routes/ProjectManager.route"));
 // app.use("/api/employees", require("././controllers/Employee.controller"));
 
 //-------------------Documentation---------------------
-app.use("/api/documentation", require("././controllers/Documentation.controller"));
+app.use("/api/documentation", require("./routes/Documentation.route"));
 
 // //-------------------Issue---------------------
 // app.use("/api/issue", require("././controllers/Issue.controller"));
@@ -43,6 +43,6 @@ app.use("/api/documentation", require("././controllers/Documentation.controller"
 //-------------------Issues---------------------
 app.use("/api/issue", require("./routes/Issue.route"));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
